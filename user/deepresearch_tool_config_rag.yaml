@@ -1,0 +1,63 @@
+tools:
+  - class_name: "user.tools.websearch_tool.WebSearchTool"
+    config: 
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "web_search"
+        description: "用于在互联网上搜索和用户问题相关的法律信息以及rag_retrieve工具未覆盖的法律条文。"
+        parameters:
+          type: "object"
+          properties:
+            query:
+              type: "array"
+              description: "查询语句列表，例如2014年行政处罚法第三条。"
+              items:
+                type: "string"
+                description: "The query to search, which helps answer the question"
+              minItems: 1
+              uniqueItems: true
+          required: ["query"]
+
+  - class_name: "user.tools.browse_tool.BrowseWebpageTool"
+    config: 
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "browse_webpage"
+        description: "用于浏览特定网页，提取其中的法律相关内容。"
+        parameters:
+          type: "object"
+          properties:
+            url_list:
+              type: "array"
+              description: "要浏览的网页URL列表，这些URL必须是通过web_search工具获得的搜索结果中的URL"
+              items:
+                type: "string"
+                description: "The chosen url from the search result, do not use url that not appeared in the search result"
+              minItems: 1
+              uniqueItems: true
+          required: ["url_list"]
+          
+  - class_name: "user.tools.rag_tool.RAGTool"
+    config: 
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "rag_retrieve"
+        description: "专门用于检索与用户问题相关的中国法律条文，目前数据库只包含所有时间版本的中华人民共和国刑法、民法典、刑事诉讼法、民事诉讼法、民法总则、民法通则、婚姻法、继承法、收养法、担保法、合同法、物权法、侵权责任法、劳动合同法、技术合同法、经济合同法。"
+        parameters:
+          type: "object"
+          properties:
+            query:
+              type: "array"
+              description: "查询语句列表，例如 2015年故意杀人罪。"
+              items:
+                type: "string"
+                description: "The query to retrieve relevant Chinese legal provisions"
+              minItems: 1
+              uniqueItems: true
+          required: ["query"]

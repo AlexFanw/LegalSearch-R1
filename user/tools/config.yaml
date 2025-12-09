@@ -1,0 +1,15 @@
+# Configuration for Tools used in LegalSearch-R1
+search_engine: "google" # "bing"
+search_top_k: 5
+search_region: "cn"
+search_lang: "zh-cn"
+page_view_port_size: 1024*40
+retrieval_top_k: 5
+openai_api_base: "https://openrouter.ai/api/v1"
+reading_agent_model: "qwen/qwen3-30b-a3b-instruct-2507"
+query_save_path: "./user/cache/search_result.json"
+query_cache_db: ./user/cache/query_cache.db
+
+# Please set your API keys here
+serper_api_key: "your_serper_api_key"
+openai_api_key: "your_openai_api_key"
